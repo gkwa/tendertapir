@@ -5,7 +5,7 @@ set -e
 export USER=root
 
 # Wait for network connectivity
-until ping -c 1 google.com >/dev/null 2>&1; do 
+until ping -c 1 google.com >/dev/null 2>&1; do
     echo "Waiting for network connectivity..."
     sleep 0.5
 done
@@ -23,5 +23,5 @@ if ! command -v quicklizard >/dev/null 2>&1; then
     uv tool install git+https://github.com/gkwa/quicklizard
 fi
 
-# Run quicklizard
-exec quicklizard -vvv
+# Run quicklizard with the correct PATH
+exec /root/.local/bin/quicklizard -vvv

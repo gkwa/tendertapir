@@ -5,17 +5,19 @@ FROM ubuntu:noble AS base
 RUN apt-get update && apt-get install -y \
     git \
     curl \
-    zip \
     iputils-ping \
     sudo \
+    zip \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Install uv in a consistent location
 RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/bin/uv sh
 
 # Set up shell environment for uv
-ENV PATH="/usr/local/bin/uv:$PATH"
-RUN echo 'export PATH="/usr/local/bin/uv:$PATH"' >> /root/.bashrc
+ENV PATH="/usr/local/bin/uv:/root/.local/bin:$PATH"
+RUN echo 'export PATH="/usr/local/bin/uv:/root/.local/bin:$PATH"' >> /root/.bashrc
+RUN echo 'export PATH="/usr/local/bin/uv:/root/.local/bin:$PATH"' >> /root/.profile
 
 # Final stage for the application
 FROM base AS app
