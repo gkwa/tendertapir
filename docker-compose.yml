@@ -1,0 +1,36 @@
+version: '3.3'
+
+services:
+  quicklizard:
+    build: .
+    container_name: iridecentimpala
+    restart: unless-stopped
+    
+    # Network configuration
+    network_mode: bridge
+    
+    # Health check to replace manual connectivity checks
+    healthcheck:
+      test: ["CMD", "ping", "-c", "1", "google.com"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    
+    # Environment variables if needed
+    environment:
+      - UV_INSTALL_DIR=/usr/local/bin/uv
+    
+    # Mount volumes if you need persistent data
+    volumes:
+      - quicklizard_data:/app/data
+    
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  quicklizard_data:
+    driver: local
