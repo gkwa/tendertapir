@@ -1,8 +1,11 @@
 #!/bin/bash
 set -e
 
+# Set required environment variables
+export USER=root
+
 # Wait for network connectivity
-until ping -c 1 google.com >/dev/null 2>&1; do
+until ping -c 1 google.com >/dev/null 2>&1; do 
     echo "Waiting for network connectivity..."
     sleep 0.5
 done
